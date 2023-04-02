@@ -1,0 +1,882 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="HK_2197">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java高级一、多线程1.1基本概念 程序：为完成特定任务、用某种语言编写的一组指令的集合。即指一 段静态的代码，静态对象。 进程：是程序的一次执行过程，或是正在运行的一个程序。是一个动态 的过程：有它自身的产生、存在和消亡的过程。（程序是静态的，进程是动态的）进程作为资源分配的单位，系统在运行时会为每个进程分配不同的内存区域 线程：进程可进一步细化为线程，是一个程序内部的一条执行路径。一个进程同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA	高级">
+<meta property="og:url" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java高级一、多线程1.1基本概念 程序：为完成特定任务、用某种语言编写的一组指令的集合。即指一 段静态的代码，静态对象。 进程：是程序的一次执行过程，或是正在运行的一个程序。是一个动态 的过程：有它自身的产生、存在和消亡的过程。（程序是静态的，进程是动态的）进程作为资源分配的单位，系统在运行时会为每个进程分配不同的内存区域 线程：进程可进一步细化为线程，是一个程序内部的一条执行路径。一个进程同">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401140518113.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401140449232.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401152953369.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401153119117.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401164120130.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401164152209.png">
+<meta property="og:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401173358873.png">
+<meta property="article:published_time" content="2023-04-02T05:43:44.066Z">
+<meta property="article:modified_time" content="2023-04-02T05:44:54.985Z">
+<meta property="article:author" content="HK_2197">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401140518113.png">
+  
+  
+  
+  <title>JAVA	高级 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>HK&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="JAVA	高级"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-02 13:43" pubdate>
+          2023年4月2日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          109 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JAVA	高级</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Java高级"><a href="#Java高级" class="headerlink" title="Java高级"></a>Java高级</h1><h3 id="一、多线程"><a href="#一、多线程" class="headerlink" title="一、多线程"></a>一、多线程</h3><h5 id="1-1基本概念"><a href="#1-1基本概念" class="headerlink" title="1.1基本概念"></a>1.1基本概念</h5><ul>
+<li>程序：为完成特定任务、用某种语言编写的一组指令的集合。即指一 段静态的代码，静态对象。</li>
+<li>进程：是程序的一次执行过程，或是正在运行的一个程序。是一个动态 的过程：有它自身的产生、存在和消亡的过程。（程序是静态的，进程是动态的）<strong>进程作为资源分配的单位</strong>，系统在运行时会为每个进程分配不同的内存区域</li>
+<li>线程：进程可进一步细化为线程，是一个程序内部的一条执行路径。一个进程同一时间并行执行多个线程，就是支持多线程的。<strong>线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)</strong></li>
+</ul>
+<p><strong>并行：</strong>多个CPU同时执行多个任务。比如：多个人同时做不同的事。 </p>
+<p><strong>并发：</strong>一个CPU(采用时间片)同时执行多个任务。比如：秒杀、多个人做同一件事。</p>
+<h5 id="1-2线程的创建和使用"><a href="#1-2线程的创建和使用" class="headerlink" title="1.2线程的创建和使用"></a>1.2线程的创建和使用</h5><p>Java语言的JVM允许程序运行多个线程，它通过<strong>java.lang.Thread</strong> 类来体现。</p>
+<p><strong>Thread类的特性</strong>：</p>
+<ul>
+<li>每个线程都是通过某个特定<strong>Thread对象的run()方法来完成操作的</strong>，经常 把run()方法的主体称为线程体</li>
+<li>通过该Thread对象的<strong>start()方法来启动这个线程</strong>，而非直接调用run()</li>
+</ul>
+<p><strong>API中创建线程的两种方式</strong></p>
+<p>1）继承Thread类的方式 </p>
+<ul>
+<li>定义子类继承Thread类。</li>
+<li>子类中重写Thread类中的run方法。 </li>
+<li>创建Thread子类对象，即创建了线程对象。 </li>
+<li>调用线程对象start方法：启动线程，调用run方法。</li>
+</ul>
+<p>2）实现Runnable接口的方式</p>
+<ul>
+<li><p>定义子类，实现Runnable接口。 </p>
+</li>
+<li><p>子类中重写Runnable接口中的run方法。 </p>
+</li>
+<li><p>通过Thread类含参构造器创建线程对象。 </p>
+</li>
+<li><p>将Runnable接口的子类对象作为实际参数传递给Thread类的构造器中。 </p>
+</li>
+<li><p>调用Thread类的start方法：开启线程，调用Runnable子类接口的run方法。</p>
+</li>
+</ul>
+<p><strong>两种实现方式的区别</strong></p>
+<ul>
+<li>继承Thread：线程代码存放Thread子类run方法中。 </li>
+<li>实现Runnable：线程代码存在接口的子类的run方法。</li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>1）如果<strong>自己手动调用run()方法，那么就只是普通方法</strong>，没有启动多线程模式。 </p>
+<p>2）run()方法由JVM调用，什么时候调用，执行的过程控制<strong>都由操作系统的CPU 调度决定</strong>。 </p>
+<p>3）想要启动多线程，<strong>必须调用start方法</strong>。 </p>
+<p>4）一个线程对象<strong>只能调用一次start()方法启动</strong>，如果重复调用了，则将抛出异常“IllegalThreadStateException”。</p>
+<p>补充：Java中的线程分为两类，<strong>守护线程</strong>和<strong>用户线程</strong></p>
+<p>守护线程是用来服务用户线程的，通过在start()方法前调用，用户线程结束守护线程也将结束</p>
+<h5 id="1-3-Thread类的有关方法"><a href="#1-3-Thread类的有关方法" class="headerlink" title="1.3 Thread类的有关方法"></a>1.3 Thread类的有关方法</h5><ul>
+<li>void start(): 启动线程，并执行对象的run()方法 </li>
+<li>run(): 线程在被调度时执行的操作 </li>
+<li>String getName(): 返回线程的名称 </li>
+<li>void setName(String name):设置该线程名称 </li>
+<li>static Thread currentThread(): 返回当前线程。在Thread子类中就是this，通常用于主线程和Runnable实现类</li>
+<li>static void yield()：线程让步，暂停当前正在执行的线程，把执行机会让给优先级相同或更高的线程 （若队列中没有同优先级的线程，忽略此方法）</li>
+<li>join() ：当某个程序执行流中调用其他线程的 join() 方法时，调用线程将被阻塞，直到 join() 方法加入的 join 线程执行完为止 （低优先级的线程也可以获得执行 ）</li>
+<li>static void sleep(long millis)：(指定时间:毫秒) 令当前活动线程在指定时间段内放弃对CPU控制,使其他线程有机会被执行,时间到后 重排队。 抛出InterruptedException异常</li>
+</ul>
+<h5 id="1-4线程的生命周期"><a href="#1-4线程的生命周期" class="headerlink" title="1.4线程的生命周期"></a>1.4线程的生命周期</h5><img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401140518113.png" srcset="/img/loading.gif" lazyload class title="image-20230401140518113">
+
+<ul>
+<li>新建： 当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态 </li>
+<li>就绪：处于新建状态的线程被start()后，将进入线程队列等待CPU时间片，此时它已 具备了运行的条件，只是没分配到CPU资源 </li>
+<li>运行：当就绪的线程被调度并获得CPU资源时,便进入运行状态， run()方法定义了线 程的操作和功能 </li>
+<li>阻塞：在某种特殊情况下，被人为挂起或执行输入输出操作时，让出 CPU 并临时中 止自己的执行，进入阻塞状态 </li>
+<li>死亡：线程完成了它的全部工作或线程被提前强制性地中止或出现异常导致结束</li>
+</ul>
+<h5 id="1-5-线程的同步"><a href="#1-5-线程的同步" class="headerlink" title="1.5 线程的同步"></a>1.5 线程的同步</h5><img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401140449232.png" srcset="/img/loading.gif" lazyload class title="image-20230401140449232">
+
+<p><strong>线程安全问题</strong></p>
+<p>​		当多条语句在操作同一个线程共享数据时，一个线程对多条语句只执行了一部分，还没有 执行完，另一个线程参与进来执行。导致共享数据的错误。</p>
+<h6 id="1-5-1Synchronized"><a href="#1-5-1Synchronized" class="headerlink" title="1.5.1Synchronized"></a>1.5.1Synchronized</h6><p>当我们想要保证一个共享资源在<strong>同一时间只会被一个线程访问到时</strong>，我们可以在代码中使用<code>synchronized</code>关键字对类或者对象加锁。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arduino">同步代码块<br><span class="hljs-built_in">synchronized</span> (对象)&#123;<br><span class="hljs-comment">// 需要被同步的代码；</span><br>&#125;<br>同步方法<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-type">void</span> <span class="hljs-title">show</span> <span class="hljs-params">(<span class="hljs-type">String</span> name)</span></span>&#123; <br>….<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>必须确保使用同一个资源的多个线程共用一把锁，</p>
+<h6 id="1-5-2-死锁"><a href="#1-5-2-死锁" class="headerlink" title="1.5.2 死锁"></a>1.5.2 死锁</h6><ul>
+<li>不同的线程分别占用对方需要的同步资源不放弃，都在等待对方放弃 自己需要的同步资源，就形成了线程的死锁</li>
+<li>出现死锁后，不会出现异常，不会出现提示，只是所有的线程都处于 阻塞状态，无法继续</li>
+</ul>
+<h6 id="1-5-3Lock"><a href="#1-5-3Lock" class="headerlink" title="1.5.3Lock"></a>1.5.3Lock</h6><p>​		java.util.concurrent.locks.Lock接口是控制多个线程对共享资源进行访问的 工具。锁提供了对共享资源的独占访问，每次只能有一个线程对Lock对象 加锁，线程开始访问共享资源之前应先获得Lock对象。</p>
+<p>​		ReentrantLock 类实现了 Lock ，它拥有与 synchronized 相同的并发性和内存语义，在实现线程安全的控制中，<strong>比较常用的是ReentrantLock，可以 显式加锁、释放锁。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>&#123;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">ReentrantLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReenTrantLock</span>();<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">m</span><span class="hljs-params">()</span>&#123;<br>		lock.lock();<br>		<span class="hljs-keyword">try</span>&#123;<br>			<span class="hljs-comment">//保证线程安全的代码;</span><br>		&#125;<br>		<span class="hljs-keyword">finally</span>&#123;<br>			lock.unlock(); <br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>如果同步代码有异常，要将unlock()写入finally语句块</strong></p>
+<h6 id="1-5-4synchronized与Lock对比"><a href="#1-5-4synchronized与Lock对比" class="headerlink" title="1.5.4synchronized与Lock对比"></a>1.5.4synchronized与Lock对比</h6><ul>
+<li>Lock是显式锁（手动开启和关闭锁，别忘记关闭锁），synchronized是 隐式锁，出了作用域自动释放 </li>
+<li>Lock只有代码块锁，synchronized有代码块锁和方法锁 </li>
+<li>使用Lock锁，JVM将花费较少的时间来调度线程，性能更好。并且具有 更好的扩展性（提供更多的子类）</li>
+</ul>
+<h5 id="1-6-线程的通信"><a href="#1-6-线程的通信" class="headerlink" title="1.6 线程的通信"></a>1.6 线程的通信</h5><p> <strong>wait() 与 notify() 和 notifyAll()</strong></p>
+<ul>
+<li>wait()：令当前线程挂起并放弃CPU、同步资源并等待，使别的线程可访问并修改共享资源，而当 前线程排队等候其他线程调用notify()或notifyAll()方法唤醒，唤醒后等待重新获得对监视器的所有 权后才能继续执行。</li>
+<li>notify()：唤醒正在排队等待同步资源的线程中优先级最高者结束等待 </li>
+<li>notifyAll ()：唤醒正在排队等待资源的所有线程结束等待</li>
+</ul>
+<p>这三个方法只有在synchronized方法或synchronized代码块中才能使用，否则会报 java.lang.IllegalMonitorStateException异常。</p>
+<h3 id="二、Java常用类"><a href="#二、Java常用类" class="headerlink" title="二、Java常用类"></a>二、Java常用类</h3><h5 id="2-1-字符串相关的类"><a href="#2-1-字符串相关的类" class="headerlink" title="2.1 字符串相关的类"></a>2.1 字符串相关的类</h5><p><strong>String类</strong></p>
+<ul>
+<li>int length()：返回字符串的长度： return value.length </li>
+<li>char charAt(int index)： 返回某索引处的字符return value[index] </li>
+<li>boolean isEmpty()：判断是否是空字符串：return value.length &#x3D;&#x3D; 0 </li>
+<li>String toLowerCase()：使用默认语言环境，将 String 中的所有字符转换为小写  String toUpperCase()：使用默认语言环境，将 String 中的所有字符转换为大写 </li>
+<li>String trim()：返回字符串的副本，忽略前导空白和尾部空白  boolean equals(Object obj)：比较字符串的内容是否相同 </li>
+<li>boolean equalsIgnoreCase(String anotherString)：与equals方法类似，忽略大 小写  String concat(String str)：将指定字符串连接到此字符串的结尾。 等价于用“+” </li>
+<li>int compareTo(String anotherString)：比较两个字符串的大小 </li>
+<li>String substring(int beginIndex)：返回一个新的字符串，它是此字符串的从 beginIndex开始截取到最后的一个子字符串。 </li>
+<li>String substring(int beginIndex, int endIndex) ：返回一个新字符串，它是此字 符串从beginIndex开始截取到endIndex(不包含)的一个子字符串。</li>
+<li>boolean endsWith(String suffix)：测试此字符串是否以指定的后缀结束 </li>
+<li>boolean startsWith(String prefix)：测试此字符串是否以指定的前缀开始 </li>
+<li>boolean startsWith(String prefix, int toffset)：测试此字符串从指定索引开始的 子字符串是否以指定前缀开始</li>
+<li>boolean contains(CharSequence s)：当且仅当此字符串包含指定的 char 值序列 时，返回 true  int indexOf(String str)：返回指定子字符串在此字符串中第一次出现处的索引 </li>
+<li>int indexOf(String str, int fromIndex)：返回指定子字符串在此字符串中第一次出 现处的索引，从指定的索引开始 </li>
+<li>int lastIndexOf(String str)：返回指定子字符串在此字符串中最右边出现处的索引 </li>
+<li>int lastIndexOf(String str, int fromIndex)：返回指定子字符串在此字符串中最后 一次出现处的索引，从指定的索引开始反向搜索 注：indexOf和lastIndexOf方法如果未找到都是返回-1</li>
+<li>String replace(char oldChar, char newChar)：返回一个新的字符串，它是 通过用 newChar 替换此字符串中出现的所有 oldChar 得到的。 </li>
+<li>String replace(CharSequence target, CharSequence replacement)：使 用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。 </li>
+<li>String replaceAll(String regex, String replacement) ： 使 用 给 定 的 replacement 替换此字符串所有匹配给定的正则表达式的子字符串。 </li>
+<li>String replaceFirst(String regex, String replacement) ： 使 用 给 定 的 replacement 替换此字符串匹配给定的正则表达式的第一个子字符串。</li>
+<li>boolean matches(String regex)：告知此字符串是否匹配给定的正则表达式。</li>
+<li>String[] split(String regex)：根据给定正则表达式的匹配拆分此字符串。 </li>
+<li>String[] split(String regex, int limit)：根据匹配给定的正则表达式来拆分此 字符串，最多不超过limit个，如果超过了，剩下的全部都放到最后一个元素中。</li>
+</ul>
+<p><strong>StringBuffer类</strong>不同于String，其对象必须使用构造器生成。有三个构造器： </p>
+<ul>
+<li><p>StringBuffer()：初始容量为16的字符串缓冲区 </p>
+</li>
+<li><p>StringBuffer(int size)：构造指定容量的字符串缓冲区 </p>
+</li>
+<li><p>StringBuffer(String str)：将内容初始化为指定字符串内容</p>
+</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">StringBuffer append(xxx)：提供了很多的append()方法，用于进行字符串拼接 <br>StringBuffer <span class="hljs-keyword">delete</span>(<span class="hljs-type">int</span> <span class="hljs-keyword">start</span>,<span class="hljs-type">int</span> <span class="hljs-keyword">end</span>)：删除指定位置的内容 <br>StringBuffer replace(<span class="hljs-type">int</span> <span class="hljs-keyword">start</span>, <span class="hljs-type">int</span> <span class="hljs-keyword">end</span>, String str)：把[<span class="hljs-keyword">start</span>,<span class="hljs-keyword">end</span>)位置替换为str StringBuffer <span class="hljs-keyword">insert</span>(<span class="hljs-type">int</span> <span class="hljs-keyword">offset</span>, xxx)：在指定位置插入xxx StringBuffer reverse() ：把当前字符序列逆转<br></code></pre></td></tr></table></figure>
+
+<p><strong>StringBuilder</strong> 和 StringBuffer 非常类似，均代表可变的字符序列，而且 提供相关功能的方法也一样</p>
+<p><strong>对比String、StringBuffer、StringBuilder</strong></p>
+<ul>
+<li>String(JDK1.0)：不可变字符序列 </li>
+<li>StringBuffer(JDK1.0)：可变字符序列、效率低、线程安全 </li>
+<li>StringBuilder(JDK 5.0)：可变字符序列、效率高、线程不安全</li>
+</ul>
+<h5 id="2-2-时间日期API"><a href="#2-2-时间日期API" class="headerlink" title="2.2 时间日期API"></a>2.2 时间日期API</h5><p>​		LocalDate、LocalTime、LocalDateTime 类是其中较重要的几个类，它们的实例是不可变的对象，分别表示使用 ISO-8601日历系统的日期、时间、日期和时间。 它们提供了简单的本地日期或时间，并不包含当前的时间信息，也不包含与时区 相关的信息。 </p>
+<ul>
+<li>LocalDate代表IOS格式（yyyy-MM-dd）的日期,可以存储 生日、纪念日等日期。 </li>
+<li>LocalTime表示一个时间，而不是日期。 </li>
+<li>LocalDateTime是用来表示日期和时间的，这是一个最常用的类之一。</li>
+</ul>
+<img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401152953369.png" srcset="/img/loading.gif" lazyload class title="image-20230401152953369">
+
+<img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401153119117.png" srcset="/img/loading.gif" lazyload class title="image-20230401153119117">
+
+<h5 id="2-3-Java比较器"><a href="#2-3-Java比较器" class="headerlink" title="2.3 Java比较器"></a>2.3 Java比较器</h5><p> Java实现对象排序的方式有两种： </p>
+<p>1）自然排序：java.lang.Comparable</p>
+<ul>
+<li>Comparable接口强行对实现它的每个类的对象进行整体排序。这种排序被称 为类的自然排序。 </li>
+<li>实现 Comparable 的类必须实现 compareTo(Object obj) 方法，两个对象即 通过 compareTo(Object obj) 方法的返回值来比较大小。如果当前对象this大 于形参对象obj，则返回正整数，如果当前对象this小于形参对象obj，则返回 负整数，如果当前对象this等于形参对象obj，则返回零。 </li>
+<li>实现Comparable接口的对象列表（和数组）可以通过 Collections.sort 或 Arrays.sort进行自动排序。实现此接口的对象可以用作有序映射中的键或有 序集合中的元素，无需指定比较器。 </li>
+<li>对于类 C 的每一个 e1 和 e2 来说，当且仅当 e1.compareTo(e2) &#x3D;&#x3D; 0 与 e1.equals(e2) 具有相同的 boolean 值时，类 C 的自然排序才叫做与 equals  一致。建议（虽然不是必需的）最好使自然排序与 equals 一致。</li>
+</ul>
+<p>2）定制排序：java.util.Comparator</p>
+<ul>
+<li>当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码， 或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那 么可以考虑使用 Comparator 的对象来排序，强行对多个对象进行整体排 序的比较。 </li>
+<li>重写compare(Object o1,Object o2)方法，比较o1和o2的大小：如果方法返 回正整数，则表示o1大于o2；如果返回0，表示相等；返回负整数，表示 o1小于o2。 </li>
+<li>可以将 Comparator 传递给 sort 方法（如 Collections.sort 或 Arrays.sort）， 从而允许在排序顺序上实现精确控制。 </li>
+<li>还可以使用 Comparator 来控制某些数据结构（如有序 set或有序映射）的 顺序，或者为那些没有自然顺序的对象 collection 提供排序。</li>
+</ul>
+<h5 id="2-4-System类"><a href="#2-4-System类" class="headerlink" title="2.4 System类"></a>2.4 System类</h5><p>​		System类代表系统，<strong>系统级的很多属性和控制方法</strong>都放置在该类的内部。 该类位于java.lang包。System类内部包含in、out和err三个成员变量，分别代表标准输入流 (键盘输入)，标准输出流(显示器)和标准错误输出流(显示器)。</p>
+<ul>
+<li>native long currentTimeMillis()： 该方法的作用是返回当前的计算机时间，时间的表达格式为当前计算机时 间和GMT时间(格林威治时间)1970年1月1号0时0分0秒所差的毫秒数。 </li>
+<li>void exit(int status)： 该方法的作用是退出程序。其中status的值为0代表正常退出，非零代表 异常退出。使用该方法可以在图形界面编程中实现程序的退出功能等。 9.5 System类 </li>
+<li>void gc()： 该方法的作用是请求系统进行垃圾回收。至于系统是否立刻回收，则 取决于系统中垃圾回收算法的实现以及系统执行时的情况。 </li>
+<li>String getProperty(String key)： 该方法的作用是获得系统中属性名为key的属性对应的值</li>
+</ul>
+<h5 id="2-5-Math类"><a href="#2-5-Math类" class="headerlink" title="2.5 Math类"></a>2.5 Math类</h5><p>java.lang.Math提供了一系列静态方法用于科学计算。其方法的参数和返回 值类型一般为double型。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-built_in">abs</span> 绝对值<br><span class="hljs-built_in">acos</span>,<span class="hljs-built_in">asin</span>,<span class="hljs-built_in">atan</span>,<span class="hljs-built_in">cos</span>,<span class="hljs-built_in">sin</span>,<span class="hljs-built_in">tan</span> 三角函数<br><span class="hljs-built_in">sqrt</span> 平方根<br><span class="hljs-built_in">pow</span>(<span class="hljs-type">double</span> a,doble b) a的b次幂<br><span class="hljs-built_in">log</span> 自然对数<br><span class="hljs-built_in">exp</span> e为底指数<br><span class="hljs-built_in">max</span>(<span class="hljs-type">double</span> a,<span class="hljs-type">double</span> b)<br><span class="hljs-built_in">min</span>(<span class="hljs-type">double</span> a,<span class="hljs-type">double</span> b)<br><span class="hljs-built_in">random</span>() 返回<span class="hljs-number">0.0</span>到<span class="hljs-number">1.0</span>的随机数<br><span class="hljs-type">long</span> <span class="hljs-built_in">round</span>(<span class="hljs-type">double</span> a) <span class="hljs-type">double</span>型数据a转换为<span class="hljs-type">long</span>型（四舍五入）<br><span class="hljs-title function_">toDegrees</span>(<span class="hljs-type">double</span> angrad) 弧度—&gt;角度<br><span class="hljs-title function_">toRadians</span>(<span class="hljs-type">double</span> angdeg) 角度—&gt;弧度<br></code></pre></td></tr></table></figure>
+
+<h3 id="三、枚举类与注解"><a href="#三、枚举类与注解" class="headerlink" title="三、枚举类与注解"></a>三、枚举类与注解</h3><h5 id="3-1-枚举类的使用"><a href="#3-1-枚举类的使用" class="headerlink" title="3.1 枚举类的使用"></a>3.1 枚举类的使用</h5><p>枚举类：类的对象只有有限个，确定的。当需要定义一组常量时，强烈建议使用枚举类</p>
+<p>枚举类对象的属性不应允许被改动, 所以应该使用 <strong>private final</strong> 修饰</p>
+<h6 id="3-1-1如何自定义枚举类"><a href="#3-1-1如何自定义枚举类" class="headerlink" title="3.1.1如何自定义枚举类"></a>3.1.1如何自定义枚举类</h6><ol>
+<li>私有化类的构造器，保证不能在类的外部创建其对象 </li>
+<li>在类的内部创建枚举类的实例。声明为：public static final  </li>
+<li>对象如果有实例变量，应该声明为private final，并在构造器中初始化</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Season</span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String SEASONNAME;<span class="hljs-comment">//季节的名称</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String SEASONDESC;<span class="hljs-comment">//季节的描述</span><br><span class="hljs-keyword">private</span> <span class="hljs-title function_">Season</span><span class="hljs-params">(String seasonName,String seasonDesc)</span>&#123;<br>    <span class="hljs-built_in">this</span>.SEASONNAME = seasonName;<br>    <span class="hljs-built_in">this</span>.SEASONDESC = seasonDesc;<br>&#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Season</span> <span class="hljs-variable">SPRING</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Season</span>(<span class="hljs-string">&quot;春天&quot;</span>, <span class="hljs-string">&quot;春暖花开&quot;</span>);<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Season</span> <span class="hljs-variable">SUMMER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Season</span>(<span class="hljs-string">&quot;夏天&quot;</span>, <span class="hljs-string">&quot;夏日炎炎&quot;</span>);<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Season</span> <span class="hljs-variable">AUTUMN</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Season</span>(<span class="hljs-string">&quot;秋天&quot;</span>, <span class="hljs-string">&quot;秋高气爽&quot;</span>);<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Season</span> <span class="hljs-variable">WINTER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Season</span>(<span class="hljs-string">&quot;冬天&quot;</span>, <span class="hljs-string">&quot;白雪皑皑&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="3-1-2如何使用关键字enum定义枚举类"><a href="#3-1-2如何使用关键字enum定义枚举类" class="headerlink" title="3.1.2如何使用关键字enum定义枚举类"></a>3.1.2如何使用关键字enum定义枚举类</h6><p>使用 enum 定义的枚举类默认继承了 java.lang.Enum类，因此不能再 继承其他类</p>
+<p><strong>必须在枚举类的第一行声明枚举类对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">SeasonEnum</span> &#123;<br>    SPRING(<span class="hljs-string">&quot;春天&quot;</span>,<span class="hljs-string">&quot;春风又绿江南岸&quot;</span>),<br>    SUMMER(<span class="hljs-string">&quot;夏天&quot;</span>,<span class="hljs-string">&quot;映日荷花别样红&quot;</span>),<br>    AUTUMN(<span class="hljs-string">&quot;秋天&quot;</span>,<span class="hljs-string">&quot;秋水共长天一色&quot;</span>),<br>    WINTER(<span class="hljs-string">&quot;冬天&quot;</span>,<span class="hljs-string">&quot;窗含西岭千秋雪&quot;</span>);<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String seasonName;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String seasonDesc;<br>	<span class="hljs-keyword">private</span> <span class="hljs-title function_">SeasonEnum</span><span class="hljs-params">(String seasonName, String seasonDesc)</span> &#123;<br>        <span class="hljs-built_in">this</span>.seasonName = seasonName;<br>        <span class="hljs-built_in">this</span>.seasonDesc = seasonDesc;<br>	&#125;<br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getSeasonName</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> seasonName;<br>    &#125;<br>	<span class="hljs-keyword">public</span> String <span class="hljs-title function_">getSeasonDesc</span><span class="hljs-params">()</span> &#123;<br>		<span class="hljs-keyword">return</span> seasonDesc;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="3-1-3Enum类的主要方法"><a href="#3-1-3Enum类的主要方法" class="headerlink" title="3.1.3Enum类的主要方法"></a>3.1.3Enum类的主要方法</h6><ul>
+<li>values()方法：返回枚举类型的对象数组。该方法可以很方便地遍历所有的 枚举值。 </li>
+<li>valueOf(String str)：可以把一个字符串转为对应的枚举类对象。要求字符 串必须是枚举类对象的“名字”。如不是，会有运行时异常： IllegalArgumentException。 </li>
+<li>toString()：返回当前枚举类对象常量的名称</li>
+</ul>
+<h6 id="3-1-4实现接口的枚举类"><a href="#3-1-4实现接口的枚举类" class="headerlink" title="3.1.4实现接口的枚举类"></a>3.1.4实现接口的枚举类</h6><ul>
+<li>和普通 Java 类一样，枚举类可以实现一个或多个接口</li>
+<li>若每个枚举值在调用实现的接口方法呈现相同的行为方式，则只 要统一实现该方法即可。</li>
+<li>若需要每个枚举值在调用实现的接口方法呈现出不同的行为方式,  则可以让每个枚举值分别来实现该方法</li>
+</ul>
+<h5 id="3-2-注解"><a href="#3-2-注解" class="headerlink" title="3.2 注解"></a>3.2 注解</h5><h6 id="3-2-1-注解-Annotation-概述"><a href="#3-2-1-注解-Annotation-概述" class="headerlink" title="3.2.1 注解(Annotation)概述"></a>3.2.1 注解(Annotation)概述</h6><p>​		Annotation 其实就是代码里的<strong>特殊标记</strong>, 这些标记可以在编译, 类加 载, 运行时被读取, 并执行相应的处理。通过使用 Annotation, 程序员 可以在不改变原有逻辑的情况下, 在源文件中嵌入一些补充信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证或者进行部署。</p>
+<p>​		使用 Annotation 时要在其前面增加 @ 符号, 并把该 Annotation 当成 一个修饰符使用。用于修饰它支持的程序元素</p>
+<p><strong>常见注解</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.annotation.javadoc;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@author</span> shkstart</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@version</span> 1.0</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@see</span> Math.java</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JavadocTest</span> &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">        * 程序的主方法，程序的入口</span><br><span class="hljs-comment">        * <span class="hljs-doctag">@param</span> args String[] 命令行参数</span><br><span class="hljs-comment">        */</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        &#125;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">        * 求圆面积的方法</span><br><span class="hljs-comment">        * <span class="hljs-doctag">@param</span> radius double 半径值</span><br><span class="hljs-comment">        * <span class="hljs-doctag">@return</span> double 圆的面积</span><br><span class="hljs-comment">        */</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getArea</span><span class="hljs-params">(<span class="hljs-type">double</span> radius)</span>&#123;<br>        	<span class="hljs-keyword">return</span> Math.PI * radius * radius;<br>    &#125;<br>&#125;<br><span class="hljs-meta">@author</span> 标明开发该类模块的作者，多个作者之间使用,分割<br><span class="hljs-meta">@version</span> 标明该类模块的版本<br><span class="hljs-meta">@see</span> 参考转向，也就是相关主题<br><span class="hljs-meta">@since</span> 从哪个版本开始增加的<br><span class="hljs-meta">@param</span> 对方法中某参数的说明，如果没有参数就不能写<br><span class="hljs-meta">@return</span> 对方法返回值的说明，如果方法的返回值类型是<span class="hljs-keyword">void</span>就不能写<br><span class="hljs-meta">@exception</span> 对方法可能抛出的异常进行说明 ，如果方法没有用<span class="hljs-keyword">throws</span>显式抛出的异常就不能写其中<br></code></pre></td></tr></table></figure>
+
+<h6 id="3-2-1利用反射获取注解信息"><a href="#3-2-1利用反射获取注解信息" class="headerlink" title="3.2.1利用反射获取注解信息"></a>3.2.1利用反射获取注解信息</h6><p>​		当一个 Annotation 类型被定义为运行时 Annotation 后, 该注解才是运行时 可见, 当 class 文件被载入时保存在 class 文件中的 Annotation 才会被虚拟 机读取。程序可以调用 AnnotatedElement对象的如下方法来访问 Annotation 信息</p>
+<p><strong>反射</strong></p>
+<p>​		反射是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法,对于任意一个对象，都能够调用它的任意方法和属性,这种<strong>动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。</strong></p>
+<p><strong>一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</strong></p>
+<h3 id="四、Java集合"><a href="#四、Java集合" class="headerlink" title="四、Java集合"></a>四、Java集合</h3><h5 id="4-1-集合框架概述"><a href="#4-1-集合框架概述" class="headerlink" title="4.1 集合框架概述"></a>4.1 集合框架概述</h5><p>Java 集合可分为 Collection 和 Map 两种体系</p>
+<p>1）Collection接口：单列数据，定义了存取一组对象的方法的集合 </p>
+<ul>
+<li>List：元素有序、可重复的集合  </li>
+<li>Set：元素无序、不可重复的集合</li>
+</ul>
+<img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401164120130.png" srcset="/img/loading.gif" lazyload class title="image-20230401164120130">
+
+<p>2） Map接口：双列数据，保存具有映射关系“key-value对”的集合</p>
+<img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401164152209.png" srcset="/img/loading.gif" lazyload class title="image-20230401164152209">
+
+<h5 id="4-2-Collection接口"><a href="#4-2-Collection接口" class="headerlink" title="4.2 Collection接口"></a>4.2 Collection接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-number">1</span>、添加<br>	add(Object obj)<br>	addAll(Collection coll)<br><span class="hljs-number">2</span>、获取有效元素的个数<br>	<span class="hljs-type">int</span> <span class="hljs-title function_">size</span><span class="hljs-params">()</span><br><span class="hljs-number">3</span>、清空集合<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">clear</span><span class="hljs-params">()</span><br><span class="hljs-number">4</span>、是否是空集合<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span><br><span class="hljs-number">5</span>、是否包含某个元素<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">contains</span><span class="hljs-params">(Object obj)</span>：是通过元素的equals方法来判断是否是同一个对象<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">containsAll</span><span class="hljs-params">(Collection c)</span>：也是调用元素的equals方法来比较的。拿两个集合的元素挨个比较。<br><span class="hljs-number">6</span>、删除<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Object obj)</span> ：通过元素的equals方法判断是否是要删除的那个元素。只会删除找到的第一个元素<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">removeAll</span><span class="hljs-params">(Collection coll)</span>：取当前集合的差集<br><span class="hljs-number">7</span>、取两个集合的交集<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">retainAll</span><span class="hljs-params">(Collection c)</span>：把交集的结果存在当前集合中，不<br>影响c<br><span class="hljs-number">8</span>、集合是否相等<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object obj)</span><br><span class="hljs-number">9</span>、转成对象数组<br>	Object[] toArray()<br><span class="hljs-number">10</span>、获取集合对象的哈希值<br>	hashCode()<br><span class="hljs-number">11</span>、遍历<br>	iterator()：返回迭代器对象，用于集合遍历<br></code></pre></td></tr></table></figure>
+
+<p>Iterator<strong>迭代器接口</strong></p>
+<p>​		Iterator对象称为迭代器(设计模式的一种)，主要用于遍历 Collection 集合中的元素。GOF给迭代器模式的定义为：提供一种方法访问一个容器(container)对象中各个元 素，而又不需暴露该对象的内部细节。迭代器模式，就是为容器而生。</p>
+<p>​		Iterator <strong>仅用于遍历集合</strong>，Iterator 本身并不提供承装对象的能力。如果需要创建 Iterator 对象，则必须有一个被迭代的集合。</p>
+<p>​		集合对象每次调用iterator()方法都得到一个<strong>全新的迭代器对象</strong>，默认游标都在集合 的第一个元素之前。</p>
+<p>比如：使用 foreach 循环遍历集合元素，<strong>遍历集合的底层调用Iterator完成操作</strong>。</p>
+<h6 id="4-2-1-List接口"><a href="#4-2-1-List接口" class="headerlink" title="4.2.1 List接口"></a>4.2.1 List接口</h6><p>​		List集合类中<strong>元素有序、且可重复</strong>，集合中的每个元素都有其对应的顺序索引。List除了从Collection集合继承的方法外，List 集合里添加了一些根据索引来 操作集合元素的方法。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-type">void</span> <span class="hljs-keyword">add</span>(<span class="hljs-type">int</span> <span class="hljs-keyword">index</span>, <span class="hljs-keyword">Object</span> ele):在<span class="hljs-keyword">index</span>位置插入ele元素<br><span class="hljs-keyword">Object</span> <span class="hljs-keyword">get</span>(<span class="hljs-type">int</span> <span class="hljs-keyword">index</span>):获取指定<span class="hljs-keyword">index</span>位置的元素<br><span class="hljs-keyword">Object</span> remove(<span class="hljs-type">int</span> <span class="hljs-keyword">index</span>):移除指定<span class="hljs-keyword">index</span>位置的元素，并返回此元素<br><span class="hljs-keyword">Object</span> <span class="hljs-keyword">set</span>(<span class="hljs-type">int</span> <span class="hljs-keyword">index</span>, <span class="hljs-keyword">Object</span> ele):设置指定<span class="hljs-keyword">index</span>位置的元素为ele<br><span class="hljs-type">boolean</span> addAll(<span class="hljs-type">int</span> <span class="hljs-keyword">index</span>, Collection eles):从<span class="hljs-keyword">index</span>位置开始将eles中的所有元素添加进来<br><span class="hljs-type">int</span> indexOf(<span class="hljs-keyword">Object</span> obj):返回obj在集合中首次出现的位置<br></code></pre></td></tr></table></figure>
+
+<h6 id="4-2-2List实现类"><a href="#4-2-2List实现类" class="headerlink" title="4.2.2List实现类"></a>4.2.2List实现类</h6><p>1）<strong>ArrayList</strong>（变长数组）</p>
+<p>​		本质上，ArrayList是对象引用的一个”变长”数组</p>
+<ul>
+<li>JDK1.7：ArrayList像饿汉式，直接创建一个初始容量为10的数组 </li>
+<li>JDK1.8：ArrayList像懒汉式，一开始创建一个长度为0的数组，当添加第一个元 素时再创建一个始容量为10的数组</li>
+</ul>
+<p>2）<strong>LinkedList</strong>（双向链表）</p>
+<p>​		对于频繁的插入或删除元素的操作，建议使用LinkedList类，效率较高</p>
+<p>3）<strong>Vector</strong></p>
+<p>​		Vector 是一个古老的集合，JDK1.0就有了。大多数操作<strong>与ArrayList 相同</strong>，区别之处在于<strong>Vector是线程安全的。</strong></p>
+<p>​		Vector总是比ArrayList慢，所以尽量避免使用。</p>
+<p><strong>面试题</strong></p>
+<p>请问ArrayList&#x2F;LinkedList&#x2F;Vector的异同？谈谈你的理解？ArrayList底层 是什么？扩容机制？Vector和ArrayList的最大区别?</p>
+<p>​		ArrayList和LinkedList的异同 二者都线程不安全，相对线程安全的Vector，执行效率高。 此外，ArrayList是实现了基于动态数组的数据结构，LinkedList基于链表的数据结构。对于 随机访问get和set，ArrayList觉得优于LinkedList，因为LinkedList要移动指针。对于新增 和删除操作add(特指插入)和remove，LinkedList比较占优势，因为ArrayList要移动数据。</p>
+<p>​		ArrayList和Vector的区别 Vector和ArrayList几乎是完全相同的,唯一的区别在于Vector是同步类(synchronized)，属于 强同步类。因此开销就比ArrayList要大，访问要慢。正常情况下,大多数的Java程序员使用 ArrayList而不是Vector,因为同步完全可以由程序员自己来控制。<strong>Vector每次扩容请求其大 小的2倍空间，而ArrayList是1.5倍</strong>。Vector还有一个子类Stack。</p>
+<h6 id="4-2-3Set接口"><a href="#4-2-3Set接口" class="headerlink" title="4.2.3Set接口"></a>4.2.3Set接口</h6><p>​		Set 集合<strong>不允许包含相同的元素</strong>，如果试把两个相同的元素加入同一个 Set 集合中，则添加操作失败。Set 判断两个对象是否相同不是使用 &#x3D;&#x3D; 运算符，<strong>而是根据 equals() 方法</strong></p>
+<h6 id="4-2-4Set实现类"><a href="#4-2-4Set实现类" class="headerlink" title="4.2.4Set实现类"></a>4.2.4Set实现类</h6><p><strong>HashSet</strong> </p>
+<p>​		HashSet是 Set 接口的典型实现，大多数时候使用 Set 集合时都使用这个实现类。HashSet 按 Hash 算法来存储集合中的元素，因此具有很好的存取、查找、删除 性能。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>不能保证元素的排列顺序</li>
+<li>HashSet 不是线程安全的</li>
+<li>集合元素可以是 null</li>
+</ul>
+<p>​		HashSet 集合判断两个元素相等的标准：两个对象通过 hashCode() 方法比较相等，并且两个对象的 equals() 方法返回值也相等。 对于存放在Set容器中的对象，对应的类一<strong>定要重写equals()和hashCode(Object  obj)方法，</strong>以实现对象相等规则。即：“相等的对象必须具有相等的散列码”。</p>
+<p>解释：根据一个类的equals方法（改写后），<strong>两个截然不 同的实例有可能在逻辑上是相等的</strong>，但是，根据Object.hashCode()方法， 它们仅仅是两个对象。</p>
+<p><strong>添加过程：</strong></p>
+<p>​		当向 HashSet 集合中存入一个元素时，HashSet 会调用该对象的 hashCode() 方法 来得到该对象的 hashCode 值，然后根据 hashCode 值，通过某种散列函数决定该对象 在 HashSet 底层数组中的存储位置。（这个散列函数会与底层数组的长度相计算<strong>得到在数组中的下标</strong>，并且这种散列函数计算还尽可能保证能均匀存储元素，越是散列分布， 该散列函数设计的越好）</p>
+<p>​		如果两个元素的hashCode()值相等，会再继续调用equals方法，如果equals方法结果为true，添加失败；如果为false，那么会保存该元素，但是该数组的位置已经有元素了， 那么会通过链表的方式继续链接。如果两个元素的 equals() 方法返回 true，但它们的 hashCode() 返回值不相 等，hashSet 将会把它们存储在不同的位置，但依然可以添加成功。</p>
+<img src="/2023/04/02/Java%E9%AB%98%E7%BA%A7/image-20230401173358873.png" srcset="/img/loading.gif" lazyload class title="image-20230401173358873">
+
+<p>​		底层也是数组，初始容量为16，当如果使用率<strong>超过0.75</strong>，（16*0.75&#x3D;12） 就会扩大容量为原来的2倍。（16扩容为32，依次为64,128….等）</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JAVA/" class="category-chain-item">JAVA</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>JAVA	高级</div>
+      <div>http://example.com/2023/04/02/Java高级/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>HK_2197</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/01/Java%E5%9F%BA%E7%A1%80/" title="JAVA基础">
+                        <span class="hidden-mobile">JAVA基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
